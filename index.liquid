@@ -1,0 +1,87 @@
+<!-- PART 1: Liquid Tags and Filters -->
+<!-- This is how we assign a variable -->
+{% assign variable = "Hello World!" %}
+{{ variable }}
+<br>
+<!-- This is how we do math  -->
+{% assign variable2 = 5 %}
+{{ variable2 | plus: 3 }}
+<br>
+<!-- Or we can write this instead -->
+{% assign variable3 = 5 | plus: 3 %}
+{{ variable3 }}
+
+<!-- No functions. We Use 'filters' to mess with variables -->
+<!-- We call these with pip | -->
+{% assign array_string = "Victor, Nathan, Tee Grizzley, Big Sean" %}
+{% assign array = array_string | split: "," %}
+
+<ul>
+<!-- For Loop on this array -->
+{% for name in array %}
+<!--   If statements are done like this  -->
+  {% if name.size > 3 %}
+  	<li>{{ name }}</li>
+<!--   This ends the if statement -->
+  {% endif %}
+<!-- This ends the loop -->
+{% endfor %}
+</ul>
+
+<!-- Part 2: Liquid Objects (Store Data) -->
+{% assign collection = collections['all'] %}
+{{ collection.title }}
+{{ collection.products }}
+{{ collection.title }}
+<ul>
+{% for product in collection.products %}
+  <li>
+    <a href="{{ product.url }}">
+    	{{ product.title }} - {{ product.price | money }}
+      {% if product.available != true %}
+      	(SOLD OUT)
+      {% endif %}
+    </a>
+  </li>
+{% endfor %}
+</ul>
+
+<br>
+{% assign collection2 = all_products['awesome-sneakers'] %}
+{{ collection2 }}
+
+<!-- Drop means you are accessing an object  -->
+
+<!-- Can use this instead of an if statement -->
+{% unless product.available %}
+	(SOLD OUT)
+{% endunless %}
+
+<!-- Part 3: Using Schemas (Theme Data) -->
+{% section 'red-heading' %}
+<!-- This is within index.liquid -->
+<!-- This is red-heading.liquid -->
+<h1 style="text-align: center; color: {{settings.linkcolor}}">Hello World!</h1>
+
+<button id="button">CLICK ME!!!</button>
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": [
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+
+document.getElementById('button').addEventListener('click', function(){alert('Button Clicked!')});
+
+{% endjavascript %}
+
+<!-- Part 4: Scope & Limitations -->
+
+
